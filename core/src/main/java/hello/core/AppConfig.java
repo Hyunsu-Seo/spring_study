@@ -10,22 +10,29 @@ import hello.core.member.MemoryMemberRepository;
 import hello.core.order.OrderService;
 import hello.core.order.OrderServiceImpl;
 import org.jspecify.annotations.NonNull;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
+@Configuration // spring으로 바꾸기
 public class AppConfig {
 
-    // 역할이 드러나지 않음 
+    // 역할이 드러나지 않음
+    @Bean // spring으로 바꾸기 // annotation 기반 config
     public MemberService memberService() {
         return new MemberServiceImple(memberRepository()); // 생성자 주입
     }
     // 역할이 드러남
-    private static MemberRepository memberRepository() {
+    @Bean // spring으로 바꾸기
+    public MemberRepository memberRepository() {
         return new MemoryMemberRepository();
     }
     // 역할이 드러나지 않음
+    @Bean // spring으로 바꾸기
     public OrderService orderService() {
         return new OrderServiceImpl(memberRepository(), discountPolicy());
     }
     // 역할이 드러남
+    @Bean // spring으로 바꾸기
     public DiscountPolicy discountPolicy() {
 //        return new FixDiscountPolicy();
         return new RateDiscountPolicy();
